@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es6", // или новее, например, "es6", "es2016", "esnext"
+    "lib": ["es6", "dom"], // включите es2015 для Map, dom для браузерных API
+    "strict": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
