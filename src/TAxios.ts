@@ -7,7 +7,6 @@ export class TAxios implements ITAxios {
 
     constructor(options: ITAxiosOptions) {
 
-
         this.axios = axios.create({
             ...options
         })

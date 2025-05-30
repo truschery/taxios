@@ -14,6 +14,10 @@ export interface ITAxios {
 
 export interface ITAxiosOptions extends AxiosRequestConfig {
 
+    response: {
+        extensive: boolean,
+    },
+
 }
 
 
