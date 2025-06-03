@@ -1,0 +1,28 @@
+{
+  "name": "taxios",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "tsx ./test/main.ts",
+    "dev": "tsx src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/truschery/taxios.git"
+  },
+  "author": "truschery",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/truschery/taxios/issues"
+  },
+  "homepage": "https://github.com/truschery/taxios#readme",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.4"
+  }
+}
