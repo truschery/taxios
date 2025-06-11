@@ -1,6 +1,6 @@
 
 import {TAxios} from "../src/TAxios";
-import {IMiddlewareRegister} from "../src/app/middlewares/interface";
+import {TMiddlewareRegister} from "../src/app/middlewares/interface";
 
 
 export class CustomAxios extends TAxios {
@@ -16,17 +16,9 @@ export class CustomAxios extends TAxios {
         return response
     }
 
-    middlewares(): IMiddlewareRegister {
+    middlewares(): TMiddlewareRegister {
         return {
-            'request:success': (config) => {
-
-                console.log(config)
-
-                return config
-            },
-            'response:success': (response) => {
-                console.log(23)
-            }
+            'request:before': []
         }
     }
 

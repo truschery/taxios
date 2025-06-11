@@ -1,5 +1,6 @@
 import axios, {AxiosRequestConfig} from "axios";
 import {TMiddleware} from "../middlewares";
+import {middleware} from "../config";
 
 
 
@@ -8,7 +9,7 @@ export class TAxiosInstance extends TMiddleware{
     axios = null
 
     constructor(options) {
-        super();
+        super(middleware);
         this.axios = axios.create({
             ...options
         })
@@ -19,14 +20,14 @@ export class TAxiosInstance extends TMiddleware{
 
     private initialize() {
         this.axios.interceptors.request.use(config => {
-            return this.run('request:success', config)
+            return this.run('request:before', config)
             //middleware request:success
 
             // console.log(config)
 
             return config
         }, error => {
-            //middleware request:error
+            return this.run('request:error', error)
         })
 
 
