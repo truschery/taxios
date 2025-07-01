@@ -1,13 +1,24 @@
-import {TMiddlewareClass} from "../middlewares/interface";
+import {IMiddlewareClass} from "../middlewares/interface";
 
 
-export class AuthService implements TMiddlewareClass {
+export class AuthService implements IMiddlewareClass {
 
-    onResponseSuccess(ctx){
 
-        console.log(ctx)
+    onRequestBefore(ctx: any, next: any){
 
-        return ctx
+        console.log(234);
+        
+
+        next()
+    };
+    
+
+    onResponseSuccess(ctx: any, next: any){
+
+        console.log(222);
+        
+
+        next()
     }
 
 }

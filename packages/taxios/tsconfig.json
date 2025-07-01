@@ -5,7 +5,7 @@
     "strict": true
   },
   "include": [
-    "packages/taxios/src/**/*.ts"
+    "./src/**/*.ts"
   ],
   "exclude": [
     "../../node_modules"

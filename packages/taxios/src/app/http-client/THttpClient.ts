@@ -1,7 +1,7 @@
 import {AxiosRequestConfig} from "axios";
 import {ITAxiosOptions, ITAxiosRequest} from "../../interface";
 import {ITHttpClientConfig} from "./interface";
-import {TAxiosInstance} from "../axios";
+import {TAxiosInstance} from "../axios/index";
 
 
 export class THttpClient extends TAxiosInstance{

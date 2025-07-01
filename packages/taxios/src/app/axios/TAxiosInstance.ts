@@ -20,13 +20,18 @@ export class TAxiosInstance extends TMiddleware{
 
     private initialize() {
         this.axios.interceptors.request.use(config => {
-            return this.run('request:before', config)
+            
+            
+            
+            return super.run('request:before', config)
             //middleware request:success
 
             // console.log(config)
 
             return config
         }, error => {
+            console.log(error);
+            
             return this.run('request:error', error)
         })
 

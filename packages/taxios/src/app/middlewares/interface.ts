@@ -4,10 +4,10 @@ export type TMiddlewareFn = (ctx: any) => any
 
 export interface IMiddlewareClass {
     name?: string,
-    onRequestBefore?: (ctx: any) => any;
-    onRequestAfter?: (ctx: any) => any;
-    onResponseSuccess?: (ctx: any) => any;
-    onResponseError?: (ctx: any) => any;
+    onRequestBefore?: (ctx: any, next: () => void) => any;
+    onRequestAfter?: (ctx: any, next: () => void) => any;
+    onResponseSuccess?: (ctx: any, next: () => void) => any;
+    onResponseError?: (ctx: any, next: () => void) => any;
 }
 
 export interface IMiddlewareClassConstructor {
@@ -19,7 +19,7 @@ export interface IMiddleware {
 }
 
 export type TMiddlewareEvents = 'request:before'
-    | 'request:error'
+    | 'request:after'
     | 'response:success'
     | 'response:error'
 

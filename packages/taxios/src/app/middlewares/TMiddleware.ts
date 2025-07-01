@@ -13,11 +13,12 @@ import {isClass} from "../validators";
 
 export class TMiddleware {
 
+    
+
     _middlewares: Map<TMiddlewareEvents, IMiddlewareClassConstructor[]> = new Map()
-    _factories: Set<IMiddlewareClass> = new Set()
     _defaultMiddlewares: TMiddlewareRegister = {
         'request:before': [AuthService],
-        'request:error': [],
+        'request:after': [],
         'response:success': [],
         'response:error': [],
     }
@@ -28,7 +29,7 @@ export class TMiddleware {
         this.config = config
 
         this._middlewares.set("request:before", [])
-        this._middlewares.set("request:error", [])
+        this._middlewares.set("request:after", [])
         this._middlewares.set("response:success", [])
         this._middlewares.set("response:error", [])
 
@@ -50,12 +51,18 @@ export class TMiddleware {
     run(name: TMiddlewareEvents, ctx: any) {
         const handlers = this.getMiddleware(name)
 
-        handlers.forEach(handler => {
+        if(!handlers || handlers.length < 0) return false
 
+        let index = 0
 
+        const next = () => {
+            const handler = handlers[index]
+            
+        
             if(isClass(handler) && isMiddlewareClass(new handler())){
+                
                 const handlerClass = new handler()
-
+                
                 const eventSettings = {
                     'request:before': handlerClass.onRequestBefore,
                     'request:after': handlerClass.onRequestAfter,
@@ -64,10 +71,14 @@ export class TMiddleware {
                 }
 
 
-                eventSettings[name](ctx)
-            }
+                console.log(eventSettings);
+                
 
-        })
+                eventSettings[name] && eventSettings[name](ctx, next)
+            }
+        }
+
+        next()
         //
         // if(handlers instanceof Array){
         //
@@ -93,13 +104,14 @@ export class TMiddleware {
     }
 
     private registerMiddlewares(externalMiddlewares: TMiddlewareRegister) {
-        for(let key: TMiddlewareEvents in externalMiddlewares){
-            const hasMiddlewareGroup = this.getMiddleware(key)
+        for(let key in externalMiddlewares){
+        
+            const hasMiddlewareGroup = this.getMiddleware(key as TMiddlewareEvents)
             if(!hasMiddlewareGroup) return false
 
-            const externalMiddlewareGroup = externalMiddlewares[key]
+            const externalMiddlewareGroup = externalMiddlewares[key as TMiddlewareEvents]
 
-            if(externalMiddlewareGroup?.length > 0){
+            if(externalMiddlewareGroup && externalMiddlewareGroup?.length > 0){
                 externalMiddlewareGroup.forEach(externalMiddleware => {
 
                     hasMiddlewareGroup.push(externalMiddleware)
