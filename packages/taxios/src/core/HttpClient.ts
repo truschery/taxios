@@ -1,24 +1,25 @@
 import {AxiosRequestConfig} from "axios";
-import {ITAxiosOptions, ITAxiosRequest} from "../../interface";
-import {ITHttpClientConfig} from "./interface";
-import {TAxiosInstance} from "../axios/index";
+import AxiosInstance from './AxiosInstance'
+import { IAxiosInstanceConfig, IRequestParams } from "./types";
 
 
-export class THttpClient extends TAxiosInstance{
-    constructor(options: AxiosRequestConfig) {
+export default class HttpClient extends AxiosInstance {
+    constructor(options: IAxiosInstanceConfig) {
         super(options);
     }
 
-    get(url: string, data?: any, config?: ITAxiosOptions) {
+    get(url: string, data?: any, config?: any) {
         return this.request({
             method: "get",
             url,
-            params: data,
-            config,
+            params: { 
+                params: data,
+                ...config
+            },
         })
     }
 
-    post(url: string, data?: any, config?: ITAxiosOptions) {
+    post(url: string, data?: any, config?: any) {
         return this.request({
             method: "post",
             url,
@@ -27,7 +28,7 @@ export class THttpClient extends TAxiosInstance{
         })
     }
 
-    put(url: string, data?: any, config?: ITAxiosOptions) {
+    put(url: string, data?: any, config?: any) {
         return this.request({
             method: "put",
             url,
@@ -40,22 +41,22 @@ export class THttpClient extends TAxiosInstance{
         return this.request({
             method: "delete",
             url,
-            config,
+            params: config,
         })
     }
 
 
-    onRequestSuccess(response){
+    onRequestSuccess(response: any){
         return response
     }
 
-    onRequestError(error){
+    onRequestError(error: any){
         return error
     }
 
 
-    private async request(options: ITAxiosRequest) {
-        const { method, url, params, config } = options
+    private async request(options: IRequestParams) {
+        const { method, url, params = {}, config = {} } = options
 
         try {
             const response = await this.axios[method](url, params, config)
@@ -65,5 +66,4 @@ export class THttpClient extends TAxiosInstance{
             return this.onRequestError(error)
         }
     }
-
 }
