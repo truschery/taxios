@@ -1,4 +1,15 @@
 import HttpClient from "./core/HttpClient";
+import BaseMiddleware from "./middleware/BaseMiddleware";
+import ProxyMiddleware from "./middleware/ProxyMiddleware";
 
-export default HttpClient
+
+
+
+export {
+    HttpClient as TaxiosClient,
+    BaseMiddleware,
+
+    ProxyMiddleware,
+
+}
 

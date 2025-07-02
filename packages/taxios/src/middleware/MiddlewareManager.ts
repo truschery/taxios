@@ -40,10 +40,11 @@ export default class MiddlewareManager {
 
   /**
    * Добавление middleware
-   * @param {Function|BaseMiddleware} middleware 
+   * @param {Function|BaseMiddleware} middleware
+   * @param ctx
    * @param {string|string[]} types - Тип(ы) обработчика
    */
-  add(middleware: TMiddleware, types = 'request:before') {
+  add(middleware: TMiddleware, types = 'request:before', ctx?: any) {
     const typesList = Array.isArray(types) ? types : [types];
     
     typesList.forEach(type => {
@@ -59,15 +60,17 @@ export default class MiddlewareManager {
       const middlewareList = this.middlewares.get(type);
       
       if (typeof middleware === 'function') {
-        middlewareList!.push({ 
-          handler: middleware, 
+        middlewareList!.push({
+          handler: middleware,
+          context: ctx,
           priority: 0,
           type: type,
           id: this.generateId()
         });
       } else if (middleware instanceof BaseMiddleware) {
-        middlewareList!.push({ 
-          handler: middleware, 
+        middlewareList!.push({
+          handler: middleware,
+          context: ctx,
           priority: middleware.priority,
           type: type,
           id: this.generateId()
@@ -108,11 +111,12 @@ export default class MiddlewareManager {
     return this.middlewares.get(type)!.map(m => {
 
       if(isClass(m.handler)){
-        const executor = this.createExecutor(m.handler as IMiddlewareClass, type);
+        const executor = this.createExecutor(m.handler as IMiddlewareClass, m.context, type);
         return { ...m, executor };
       }
         
       if (typeof m.handler === 'function') {
+
         return { ...m, executor: m.handler };
       }
       
@@ -121,26 +125,25 @@ export default class MiddlewareManager {
 
   /**
    * Создание executor'а для класса middleware
-   * @param {BaseMiddleware} handler 
-   * @param {string} type 
+   * @param {BaseMiddleware} handler
+   * @param ctx
+   * @param {string} type
    */
-  createExecutor(handler: IMiddlewareClass, type: string) {
+  createExecutor(handler: IMiddlewareClass, ctx: any, type: string) {
     const handlerClass = new (handler as any)()
 
     switch (type) {
       case 'request:before':
-        
-        
-        return (config: AxiosRequestConfig) => handlerClass.onRequestBefore(config);
+        return (config: AxiosRequestConfig) => handlerClass.onRequestBefore(config, ctx);
       case 'request:after':
-        return (config: AxiosRequestConfig) => handlerClass.onRequestAfter(config);
+        return (config: AxiosRequestConfig) => handlerClass.onRequestAfter(config, ctx);
       case 'response':
         return {
-          fulfilled: (response: any) => handlerClass.onResponseSuccess(response),
-          rejected: (error: any) => handlerClass.onResponseError(error)
+          fulfilled: (response: any) => handlerClass.onResponseSuccess(response, ctx),
+          rejected: (error: any) => handlerClass.onResponseError(error, ctx)
         };
       case 'error':
-        return (error: any) => handlerClass.onError(error);
+        return (error: any) => handlerClass.onError(error, ctx);
       default:
         // Для пользовательских типов пытаемся найти соответствующий метод
         const methodName = `on${type.charAt(0).toUpperCase() + type.slice(1)}`;

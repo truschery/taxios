@@ -36,8 +36,8 @@ export default class TAxiosInstance {
         // }, 'response:error')
     }
 
-    use(middleware: TMiddleware, types = 'request:before') {
-        this.middlewareManager.add(middleware, types);
+    use(middleware: TMiddleware, types = 'request:before', context?: any) {
+        this.middlewareManager.add(middleware, types, context);
         this.refreshInterceptors();
         return this;
     }

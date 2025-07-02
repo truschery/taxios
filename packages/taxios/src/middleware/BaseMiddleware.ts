@@ -14,35 +14,38 @@ export default class BaseMiddleware implements IMiddlewareClass {
   /**
    * Обработка запроса
    * @param {Object} config - Конфигурация axios
+   * @param ctx
    * @returns {Object}
    */
-  onRequestBefore(config: AxiosRequestConfig) {
+  onRequestBefore(config: AxiosRequestConfig, ctx?: any) {
     return config;
   }
 
-  onRequestAfter(config: any){
+  onRequestAfter(config: any, ctx?: any){
     return config
   }
 
   /**
    * Обработка ответа
    * @param {Object} response - Ответ от сервера
+   * @param ctx
    * @returns {Object}
    */
-  onResponseSuccess(response: any) {
+  onResponseSuccess(response: any, ctx?: any) {
     return response;
   }
 
-  onResponseError(error: any) {
+  onResponseError(error: any, ctx?: any) {
     return error;
   }
 
   /**
    * Обработка ошибки
    * @param {Error} error - Объект ошибки
+   * @param ctx
    * @returns {Promise}
    */
-  onError(error: any) {
+  onError(error: any, ctx?: any) {
     return Promise.reject(error);
   }
 }

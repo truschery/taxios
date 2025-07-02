@@ -2,13 +2,12 @@ import terser from "@rollup/plugin-terser";
 import typescript from '@rollup/plugin-typescript';
 
 export default {
-    input: 'src/index.ts',
+    input: 'dist/index.js',
     output: [
         {
             file: 'dist/taxios.min.js',
             format: 'es',
             plugins: [
-                typescript(),
                 terser({
                     compress: {
                         drop_console: false,

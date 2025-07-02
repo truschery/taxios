@@ -1,11 +1,11 @@
 {
-  "name": "taxios",
+  "name": "@trsuchery/taxios",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple wrapper around Axios with support for custom middleware to handle requests and responses.",
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "test": "no test",
+    "test": "tsx test.ts",
     "dev": "tsx src/index.ts",
     "build": "rollup --config",
     "build-ts": "tsc"
@@ -14,21 +14,30 @@
     "type": "git",
     "url": "git+https://github.com/truschery/taxios.git"
   },
-  "author": "truschery",
+  "author": "truschery <truschery.work@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/truschery/taxios/issues"
   },
   "homepage": "https://github.com/truschery/taxios#readme",
   "dependencies": {
-    "axios": "^1.9.0"
+    "axios": "^1.9.0",
+    "https-proxy-agent": "^7.0.6"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.4",
     "rollup": "^4.44.1",
     "rollup-plugin-dts": "^6.2.1",
-    "tsx": "^4.19.4",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
-  }
+  },
+  "keywords": [
+    "axios",
+    "http-client",
+    "http",
+    "api",
+    "requests",
+    "network"
+  ]
 }

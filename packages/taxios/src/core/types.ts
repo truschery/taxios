@@ -46,11 +46,11 @@ export interface IMiddlewareClass {
     config?: IBaseMiddlewareConfig;
     priority: number;
 
-    onRequestBefore?: (config: AxiosRequestConfig) => AxiosRequestConfig;
-    onRequestAfter?: (config: AxiosRequestConfig) => AxiosRequestConfig;
-    onResponseSuccess?: (ctx: any) => any;
-    onResponseError?: (ctx: any) => any;
-    onError?: (error: any) => Promise<any>;
+    onRequestBefore?: (config: AxiosRequestConfig, ctx?: any) => AxiosRequestConfig;
+    onRequestAfter?: (config: AxiosRequestConfig, ctx?: any) => AxiosRequestConfig;
+    onResponseSuccess?: (response: any, ctx?: any) => any;
+    onResponseError?: (error: any, ctx?: any) => any;
+    onError?: (error: any, ctx: any) => Promise<any>;
     
 }
 
@@ -61,6 +61,7 @@ export interface IMiddlewareHandler {
     priority: number;
     type: string;
     id: string;
+    context?: any;
 }
 
 
