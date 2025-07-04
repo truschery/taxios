@@ -19,7 +19,15 @@ client.use(ProxyMiddleware, 'request:before', {
 })
 
 const main = async () => {
-    client.get('https://httpbin.org/ip').then(result => {
+    client.get('https://httpbin.org/ip', {
+            protocol: 'http', // или 'https' в зависимости от прокси
+            host: '80.243.140.54', // IP или хост прокси
+            port: 59100,
+            auth: {
+                username: 'pavikforcebussines',
+                password: 'bQDkmAabC2'
+            },
+        }).then(result => {
         console.log(result)
 
     })

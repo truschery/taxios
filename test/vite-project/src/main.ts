@@ -1,4 +1,4 @@
-import { TaxiosClient, ProxyMiddleware } from "@trsuchery/taxios"
+import { TaxiosClient, ProxyMiddleware } from "@truschery/taxios"
 
 
 const client = new TaxiosClient({
@@ -24,9 +24,20 @@ client.use(ProxyMiddleware, 'request:before', {
 })
 
 const main = async () => {
-    client.get('https://httpbin.org/ip').then(result => {
-        console.log(result)
+    client.get('https://httpbin.org/ip',{
+        proxy: {
+            protocol: 'http', // или 'https' в зависимости от прокси
+            host: 'proxy.scrapingbee.com', // IP или хост прокси
+            port: 8886,
+            auth: {
+                username: '4STS0F0CWRT0ZAHWI5JC15IKBZMOSPE3U9Y3JII91JSY3QCPAEXARPKVGNZ39SXC5W41YCHXXRVE39XF',
+                password: 'HoYPnpldMO'
+            },
+        }
+    }).then(result => {
         console.log(result.config)
+        console.log(result)
+        
     })
 }
 

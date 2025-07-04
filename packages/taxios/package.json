@@ -1,5 +1,5 @@
 {
-  "name": "@trsuchery/taxios",
+  "name": "@truschery/taxios",
   "version": "1.0.0",
   "description": "A simple wrapper around Axios with support for custom middleware to handle requests and responses.",
   "main": "src/index.ts",
@@ -21,15 +21,17 @@
   },
   "homepage": "https://github.com/truschery/taxios#readme",
   "dependencies": {
+    "@types/tunnel": "^0.0.7",
     "axios": "^1.9.0",
-    "https-proxy-agent": "^7.0.6"
+    "https-proxy-agent": "^7.0.6",
+    "tsx": "^4.20.3",
+    "tunnel": "^0.0.6"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.4",
     "rollup": "^4.44.1",
     "rollup-plugin-dts": "^6.2.1",
-    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
   "keywords": [
